@@ -1,0 +1,20 @@
+.star {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    padding-right: 8px;
+}
+
+.hover {
+    cursor: pointer;
+}
+
+
+
+.star:not(:last-child) {
+    padding-right: 8px;
+}
+
+.filled {
+    fill: var(--primary)
+}
