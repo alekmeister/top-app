@@ -18,6 +18,7 @@ select {
 
 a {
     text-decoration: none;
+    cursor: default;
 }
 
 h1,

@@ -1,8 +1,12 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import './globals.css';
-import './reset.css';
-import type { ReactNode } from 'react';
+import '../src/app/styles/globals.css';
+import '../src/app/styles/reset.css';
+import React, { ReactNode } from 'react';
+import { Footer } from 'widgets/Footer';
+import { Header } from 'widgets/Header';
+import { Sidebar } from 'widgets/Sidebar';
+import styles from './appLayout.module.css';
 
 const notoSans = localFont({
   variable: '--font-noto-sans',
@@ -44,7 +48,12 @@ export default function RootLayout({
       lang='en'
       className={notoSans.className}
     >
-      <body>{children}</body>
+      <body className={styles.main_page}>
+        <Header className={styles.header} />
+        <Sidebar className={styles.sidebar} />
+        <div className={styles.body}> {children}</div>
+        <Footer className={styles.footer} />
+      </body>
     </html>
   );
 }

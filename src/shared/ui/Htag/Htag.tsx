@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { HtagProps } from '@/app/components/Htag/Htag.props';
 import styles from './Htag.module.css';
+import { HtagProps } from './Htag.props';
 export const Htag: FC<HtagProps> = ({ children, tag }) => {
   switch (tag) {
     case 'h1':

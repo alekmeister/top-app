@@ -1,0 +1,29 @@
+.menu_icon {
+  width: 20px;
+  height: 20px;
+}
+
+.first_lvl_item{
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 20px;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--black);
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    color: var(--primary);
+    stroke: var(--primary),
+  }
+
+}
+
+.second_lvl_item {
+  margin-bottom: 10px;
+  color: var(--grey-dark);
+  text-transform: uppercase;
+  cursor: pointer
+}

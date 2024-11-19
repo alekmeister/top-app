@@ -1,6 +1,6 @@
+import cn from 'classnames';
 import { FC } from 'react';
 import styles from './Tag.module.css';
-import cn from 'classnames';
 import { TagProps } from './Tag.props';
 
 export const Tag: FC<TagProps> = ({

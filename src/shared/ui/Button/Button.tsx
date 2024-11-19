@@ -1,9 +1,9 @@
-import { FC } from 'react';
 import cn from 'classnames';
-import { ButtonProps } from 'src/shared/ui/Button/Button.props';
-import styles from 'src/shared/ui/Button/Button.module.css';
-
+import { FC } from 'react';
+import styles from './Button.module.css';
+import { ButtonProps } from './Button.props';
 import ArrowIcon from './chevron.svg';
+
 export const Button: FC<ButtonProps> = ({
   children,
   className,
@@ -11,7 +11,6 @@ export const Button: FC<ButtonProps> = ({
   arrow = 'none',
   ...rest
 }) => {
-  const x = 1;
   return (
     <button
       className={cn(styles.button, className, {
