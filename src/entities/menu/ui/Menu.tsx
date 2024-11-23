@@ -1,5 +1,9 @@
+'use client';
+
 import cn from 'classnames';
-import type { FC } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { FC, useEffect, useState } from 'react';
 import {
   getMenuItems,
   MenuItems,
@@ -9,66 +13,85 @@ import { TopLevelCategory } from 'shared/api/requests/getPageByAlias';
 import { FIRST_LVL_MENU } from '../lib/constants';
 import styles from './Menu.module.scss';
 
-interface MenuProps {
-  className?: string;
-}
-
-async function buildFirstLvL() {
+export const FirstLvLMenu = () => {
+  const pathName = usePathname();
   return (
     <>
       {FIRST_LVL_MENU.map(({ route, icon, name, id }) => (
         <div key={route}>
-          <a
-            href={route}
-            className={styles.first_lvl_item}
+          <Link
+            href={`/${route}`}
+            className={cn(styles.first_lvl_item, {
+              [styles.item__active]: pathName.includes(route),
+            })}
           >
             {icon}
             <span>{name}</span>
-          </a>
-          {buildSecondLvL(id, route)}
+          </Link>
+          <SecondLvLMenu
+            id={id}
+            route={route}
+          />
         </div>
       ))}
     </>
   );
-}
+};
 
-async function buildSecondLvL(id: TopLevelCategory, route: string) {
-  const data = await getMenuItems(id);
+const SecondLvLMenu: FC<{ id: TopLevelCategory; route: string }> = ({
+  route,
+  id,
+}) => {
+  const [secondLvLData, setSecondLvLData] = useState<MenuItems[] | null>(null);
+
+  useEffect(() => {
+    getMenuItems(id).then((resp) => setSecondLvLData(resp));
+  }, [id]);
 
   return (
-    <div>
-      {data?.map(({ _id, isOpen, pages }) => (
+    <div className={styles.second_block_container}>
+      {secondLvLData?.map(({ _id, isOpen = true, pages }) => (
         <div
           className={styles.second_lvl_item}
           key={_id.secondCategory}
         >
           <div>{_id.secondCategory}</div>
-          <div className={cn({ [styles.isOpen]: isOpen })}>
-            {buildThirdLvL([], route)}
+          <div>
+            {isOpen && (
+              <ThirdLvLMenu
+                pages={pages.slice(0, 5)}
+                route={route}
+              />
+            )}
           </div>
         </div>
       ))}
     </div>
   );
-}
+};
 
-function buildThirdLvL(data: PageItem[], route: string) {
+export const ThirdLvLMenu: FC<{ pages: PageItem[]; route: string }> = ({
+  route,
+  pages,
+}) => {
+  const pathName = usePathname();
   return (
     <>
-      {data.map(({ alias, _id, category }) => (
-        <a
+      {pages.map(({ alias, _id, category }) => (
+        <Link
           key={_id}
           href={`/${route}/${alias}`}
+          className={cn(styles.third_lvl_item, {
+            [styles.item__active]: pathName.includes(alias),
+          })}
         >
           {category}
-        </a>
+        </Link>
       ))}
     </>
   );
-}
+};
 
-export const Menu: FC<MenuProps> = async (props) => {
-  const { className } = props;
-
-  return <div className={cn(styles.Menu, className)}>{buildFirstLvL()}</div>;
+export const Menu: FC = () => {
+  return <FirstLvLMenu />;
 };

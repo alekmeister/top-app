@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import '../src/app/styles/globals.css';
 import '../src/app/styles/reset.css';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, Suspense } from 'react';
 import { Footer } from 'widgets/Footer';
 import { Header } from 'widgets/Header';
 import { Sidebar } from 'widgets/Sidebar';
